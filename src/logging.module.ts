@@ -1,23 +1,26 @@
-import { Global, Module } from '@nestjs/common';
-import { LoggingService } from './logging.service';
+import {Global, Module} from '@nestjs/common';
+import {LoggerParams} from './loggerParams';
+import {LoggingService} from './logging.service';
 
 @Global()
 @Module({})
+/**
+ * LoggingModule
+ */
 export class LoggingModule {
-
-  public static register(hell:any) {
-    console.log("inside module", hell);
-
+  public static register(
+      params: LoggerParams,
+  ) {
     const loggingProvider = {
       provide: LoggingService,
-      useFactory: async (): Promise<LoggingService> => LoggingService.load(hell),
+      useFactory: async (): Promise<LoggingService> =>
+        LoggingService.load(params),
     };
 
     return {
       module: LoggingModule,
       providers: [loggingProvider],
-      exports: [loggingProvider]
+      exports: [loggingProvider],
     };
   }
-
 }

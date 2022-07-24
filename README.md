@@ -13,7 +13,7 @@ import { AppService } from './app.service';
 import { LoggingModule } from '@usercentrics/logging'; // <-- Import the module
 
 @Module({
-  imports: [LoggingModule.register("from register!")], // <-- Initialize the module
+  imports: [LoggingModule.register({})], // <-- Initialize the module
   controllers: [AppController],
   providers: [AppService],
 })
