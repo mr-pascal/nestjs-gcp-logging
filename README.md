@@ -10,7 +10,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoggingModule } from '@usercentrics/logging'; // <-- Import the module
+import { LoggingModule } from '@pzwik/logging'; // <-- Import the module
 
 @Module({
   imports: [LoggingModule.register({})], // <-- Initialize the module
@@ -25,7 +25,7 @@ export class AppModule { }
 ```typescript
 // main.ts
 import { NestFactory } from '@nestjs/core';
-import { LoggingService } from '@usercentrics/logging'; // <-- Import here
+import { LoggingService } from '@pzwik/logging'; // <-- Import here
 import { AppModule } from './app.module';
 
 async function bootstrap() {
