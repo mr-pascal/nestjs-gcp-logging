@@ -1,8 +1,6 @@
 # Nest.js GCP Logger
 
 
-
-
 ### How to use
 
 ```typescript
@@ -18,7 +16,6 @@ import { LoggingModule } from '@pzwik/logging'; // <-- Import the module
   providers: [AppService],
 })
 export class AppModule { }
-
 ```
 
 
@@ -35,7 +32,6 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
-
 ```
 
 ```typescript
@@ -49,5 +45,4 @@ export class AppService {
     return 'Hello World!';
   }
 }
-#
 ````
