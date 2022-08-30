@@ -17,5 +17,7 @@ module.exports = {
   'rules': {
     'new-cap': 1,
     'require-jsdoc': 0,
+    'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': 2,
   },
 };
