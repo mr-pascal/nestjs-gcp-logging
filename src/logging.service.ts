@@ -1,5 +1,6 @@
 import {ConsoleLogger, Injectable, LoggerService} from '@nestjs/common';
 import {LoggerParams} from './loggerParams';
+import {Severity} from './severity';
 
 @Injectable()
 /**
@@ -32,32 +33,32 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * Write an "INFO" level log
    * @param {any} message
    */
-  log(message: any, ...optionalParams: any[]) {
-    console.log(JSON.stringify({severity: 'INFO', message: message}));
+  log(message: any) {
+    console.log(JSON.stringify({severity: Severity.INFO, message: message}));
   }
 
   /**
    * Write an "error" level log.
    * @param {any} message
    */
-  error(message: any, ...optionalParams: any[]) {
-    console.log(JSON.stringify({severity: 'ERROR', message: message}));
+  error(message: any) {
+    console.log(JSON.stringify({severity: Severity.ERROR, message: message}));
   }
 
   /**
    * Write a "WARNING" level log.
    * @param {any} message
    */
-  warn(message: any, ...optionalParams: any[]) {
-    console.log(JSON.stringify({severity: 'WARNING', message: message}));
+  warn(message: any) {
+    console.log(JSON.stringify({severity: Severity.WARNING, message: message}));
   }
 
   /**
    * Write a "DEBUG" level log.
    * @param {any} message
    */
-  debug(message: any, ...optionalParams: any[]) {
-    console.log(JSON.stringify({severity: 'DEBUG', message: message}));
+  debug(message: any) {
+    console.log(JSON.stringify({severity: Severity.DEBUG, message: message}));
   }
 
 
@@ -65,7 +66,7 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * Write a "INFO" level log.
    * @param {any} message
    */
-  verbose(message: any, ...optionalParams: any[]) {
-    console.log(JSON.stringify({severity: 'INFO', message: message}));
+  verbose(message: any) {
+    console.log(JSON.stringify({severity: Severity.INFO, message: message}));
   }
 }
