@@ -6,7 +6,7 @@
 
 | Property              | Default | Description |
 | ---                   | ---     | --- |
-| `GCP_ERROR_REPORTING` | `false` | If set to `true` the `error`s are reognized by GCP Error Reporting by wrapping the provided message in a stack trace |
+| `GCP_ERROR_REPORTING` | `false` | If set to `true` all error messages are recognized by GCP Error Reporting by wrapping the provided message in a stack trace |
 
 
 
