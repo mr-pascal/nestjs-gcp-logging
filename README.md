@@ -1,6 +1,15 @@
 # Nest.js GCP Logger
 
 
+
+### Module Parameters
+
+| Property              | Default | Description |
+| ---                   | ---     | --- |
+| `GCP_ERROR_REPORTING` | `false` | If set to `true` all error messages are recognized by GCP Error Reporting by wrapping the provided message in a stack trace |
+
+
+
 ### How to use
 
 ```typescript
@@ -11,7 +20,11 @@ import { AppService } from './app.service';
 import { LoggingModule } from '@pzwik/nestjs-gcp-logger'; // <-- Import the module
 
 @Module({
-  imports: [LoggingModule.register({})], // <-- Initialize the module
+  imports: [
+    LoggingModule.register({ // <-- Initialize the module
+      GCP_ERROR_REPORTING: false // default is 'false'
+    })
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

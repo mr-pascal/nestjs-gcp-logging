@@ -1,4 +1,4 @@
-import {ConsoleLogger, Injectable, LoggerService} from '@nestjs/common';
+import {ConsoleLogger, Inject, Injectable, LoggerService} from '@nestjs/common';
 import {LoggerParams} from './loggerParams';
 import {Severity} from './severity';
 
@@ -15,7 +15,9 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {LoggerParams} params
    */
   constructor(
-      params: LoggerParams = {},
+      @Inject('LoggingServiceParams') params: LoggerParams = {
+        GCP_ERROR_REPORTING: false,
+      },
   ) {
     super();
     LoggingService.params = params;
@@ -42,6 +44,10 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {any} message
    */
   error(message: any) {
+    if (LoggingService.params.GCP_ERROR_REPORTING) {
+      // Wrapping the message in a Error stack makes the Error Reporter recognize it.
+      message = Error(message).stack;
+    }
     console.log(JSON.stringify({severity: Severity.ERROR, message: message}));
   }
 
