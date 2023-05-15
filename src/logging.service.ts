@@ -46,7 +46,7 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
   error(message: any) {
     if (LoggingService.params.GCP_ERROR_REPORTING) {
       // Wrapping the message in a Error stack makes the Error Reporter recognize it.
-      message = Error(message).stack;
+      message = typeof message === 'object' ? Error(JSON.stringify(message)).stack : Error(message).stack;
     }
     console.log(JSON.stringify({severity: Severity.ERROR, message: message}));
   }
