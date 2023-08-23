@@ -1,10 +1,10 @@
-import {ConsoleLogger, Inject, Injectable, LoggerService} from '@nestjs/common';
-import {LoggerParams} from './loggerParams';
-import {Severity} from './severity';
+import { ConsoleLogger, Inject, Injectable, LoggerService } from '@nestjs/common';
+import { LoggerParams } from './loggerParams';
+import { Severity } from './severity';
 
 @Injectable()
 /**
- * Service for writing logs in a GCP compatbile format
+ * Service for writing logs in a GCP compatible format
  */
 export class LoggingService extends ConsoleLogger implements LoggerService {
   private static params: LoggerParams;
@@ -15,20 +15,11 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {LoggerParams} params
    */
   constructor(
-      @Inject('LoggingServiceParams') params: LoggerParams = {
-        GCP_ERROR_REPORTING: false,
+      @Inject('LoggingServiceParams') private params: LoggerParams = {
+        gcpErrorReporting: false,
       },
   ) {
     super();
-    LoggingService.params = params;
-  }
-
-  /**
-   * Return a new instance of the LoggingService
-   * @param {LoggerParams} params
-   */
-  static async load(params: LoggerParams): Promise<LoggingService> {
-    return new LoggingService(params);
   }
 
   /**
@@ -44,15 +35,14 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {any} message
    */
   error(message: any) {
-    if (LoggingService.params.GCP_ERROR_REPORTING) {
-      // Wrapping the message in a Error stack makes the Error Reporter recognize it.
-      message = Error(
-        typeof message === "object" && !(message instanceof Error)
-          ? JSON.stringify(message)
-          : message,
-      ).stack;
+    if (this.params.gcpErrorReporting) {
+      const composedMessage = typeof message === 'object' && !(message instanceof Error)
+        ? JSON.stringify(message) : message;
+
+      message = new Error(composedMessage).stack;
     }
-    console.log(JSON.stringify({severity: Severity.ERROR, message: message}));
+
+    console.log(JSON.stringify({ severity: Severity.ERROR, message }));
   }
 
   /**
