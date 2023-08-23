@@ -7,7 +7,6 @@ import { Severity } from './severity';
  * Service for writing logs in a GCP compatible format
  */
 export class LoggingService extends ConsoleLogger implements LoggerService {
-  private static params: LoggerParams;
 
   /**
    * Constructor
