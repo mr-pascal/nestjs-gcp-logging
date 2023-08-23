@@ -6,7 +6,7 @@
 
 | Property              | Default | Description |
 | ---                   | ---     | --- |
-| `GCP_ERROR_REPORTING` | `false` | If set to `true` all error messages are recognized by GCP Error Reporting by wrapping the provided message in a stack trace |
+| `gcpErrorReporting`   | `false` | If set to `true` all error messages are recognized by GCP Error Reporting by wrapping the provided message in a stack trace |
 
 
 
@@ -21,8 +21,8 @@ import { LoggingModule } from '@pzwik/nestjs-gcp-logger'; // <-- Import the modu
 
 @Module({
   imports: [
-    LoggingModule.register({ // <-- Initialize the module
-      GCP_ERROR_REPORTING: false // default is 'false'
+    LoggingModule.forRoot({ // <-- Initialize the module
+      gcpErrorReporting: false // default is 'false'
     })
   ],
   controllers: [AppController],
@@ -39,9 +39,9 @@ import { LoggingService } from '@pzwik/nestjs-gcp-logger'; // <-- Import here
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { 
-    logger: new LoggingService() // <-- Instantiate here
-  });
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  app.useLogger(app.get(LoggingService));
+
   await app.listen(3000);
 }
 bootstrap();
@@ -52,8 +52,10 @@ import { Injectable, Logger } from '@nestjs/common'; // <-- Import Logger from N
 
 @Injectable()
 export class AppService {
+  private readonly logger = new Logger('AppService');
+
   getHello(): string {
-    Logger.error('Some Error happened!'); // <-- Calls the logger
+    this.logger.error('Some Error happened!'); // <-- Calls the logger
     // {"severity":"ERROR","message":"Some Error happened!"}
     return 'Hello World!';
   }
