@@ -15,9 +15,9 @@
 ```typescript
 // app.module.ts
 import { Module } from '@nestjs/common';
+import { LoggingModule } from '@lightness/nestjs-gcp-logger'; // <-- Import the module
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoggingModule } from '@pzwik/nestjs-gcp-logger'; // <-- Import the module
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ export class AppModule { }
 ```typescript
 // main.ts
 import { NestFactory } from '@nestjs/core';
-import { LoggingService } from '@pzwik/nestjs-gcp-logger'; // <-- Import here
+import { LoggingService } from '@lightness/nestjs-gcp-logger'; // <-- Import here
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -61,3 +61,41 @@ export class AppService {
   }
 }
 ````
+
+### How to mock in tests
+
+```typescript
+  // logger.mock.ts
+  export class LoggerMock {
+  log() {
+    return;
+  }
+  error() {
+    return;
+  }
+  warn() {
+    return;
+  }
+  debug() {
+    return;
+  }
+  verbose() {
+    return;
+  }
+}
+```
+
+```typescript
+  // test.spec.ts
+  const moduleFixture = await Test.createTestingModule({...})
+    .overrideProvider(LoggingService)
+    .useClass(LoggerMock)
+    .compile();
+
+  const app = moduleFixture.createNestApplication();
+
+  // Do not forget to set the logger, otherwise nestjs default logger
+  app.useLogger(app.get(LoggingService));
+  
+  await app.init();
+```
