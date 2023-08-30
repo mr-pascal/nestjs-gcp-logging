@@ -1,6 +1,6 @@
 {
-  "name": "@lightness/nestjs-gcp-logger",
-  "version": "2.0.2",
+  "name": "@pzwik/nestjs-gcp-logger",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -36,9 +36,9 @@
   "contributors": [
     "Uladzimir Aleshka"
   ],
-  "homepage": "https://github.com/lightness/nestjs-gcp-logging",
+  "homepage": "https://github.com/mr-pascal/nestjs-gcp-logging",
   "bugs": {
-    "url": "https://github.com/lightness/nestjs-gcp-logging"
+    "url": "https://github.com/mr-pascal/nestjs-gcp-logging"
   },
   "license": "ISC",
   "jest": {

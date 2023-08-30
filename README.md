@@ -15,7 +15,7 @@
 ```typescript
 // app.module.ts
 import { Module } from '@nestjs/common';
-import { LoggingModule } from '@lightness/nestjs-gcp-logger'; // <-- Import the module
+import { LoggingModule } from '@pzwik/nestjs-gcp-logger'; // <-- Import the module
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -35,7 +35,7 @@ export class AppModule { }
 ```typescript
 // main.ts
 import { NestFactory } from '@nestjs/core';
-import { LoggingService } from '@lightness/nestjs-gcp-logger'; // <-- Import here
+import { LoggingService } from '@pzwik/nestjs-gcp-logger'; // <-- Import here
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -99,3 +99,63 @@ export class AppService {
   
   await app.init();
 ```
+
+### Migrate 1.X -> 2.X
+
+1. Update module creation
+  * from 
+  ```ts
+  LoggingModule.register()
+  ```
+  * to 
+  ```ts
+  LoggingModule.forRoot()
+  ```
+2. Update name of param
+  * from 
+  ```ts
+  GCP_ERROR_REPORTING
+  ```
+  * to 
+  ```ts
+  gcpErrorReporting
+  ```
+3. Update how logger passed to app 
+  * from 
+  ```ts
+  const app = await NestFactory.create(AppModule, { logger: new LoggingService() });
+  ```
+  * to 
+  ```ts
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  app.useLogger(app.get(LoggingService))
+  ```
+4. Update logger usage in services
+  * from
+  ```ts
+  import { Injectable, Logger } from '@nestjs/common';
+
+  @Injectable()
+  export class AppService {
+    getHello(): string {
+      Logger.error('Some Error happened!');
+      return 'Hello World!';
+    }
+  }
+  ```
+  * to
+  ```ts
+  import { Injectable, Logger } from '@nestjs/common';
+
+  @Injectable()
+  export class AppService {
+    private readonly logger = new Logger('AppService');
+
+    getHello(): string {
+      this.logger.error('Some Error happened!');
+      return 'Hello World!';
+    }
+  }
+  ```
+
+
