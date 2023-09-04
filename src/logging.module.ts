@@ -1,6 +1,6 @@
-import {Global, Module} from '@nestjs/common';
-import {LoggerParams} from './loggerParams';
-import {LoggingService} from './logging.service';
+import { Global, Module } from '@nestjs/common';
+import { LoggerParams } from './loggerParams';
+import { LoggingService } from './logging.service';
 
 @Global()
 @Module({})
@@ -8,19 +8,13 @@ import {LoggingService} from './logging.service';
  * LoggingModule
  */
 export class LoggingModule {
-  public static register(
-      params: LoggerParams,
-  ) {
-    const loggingProvider = {
-      provide: LoggingService,
-      useFactory: async (): Promise<LoggingService> =>
-        LoggingService.load(params),
-    };
+  public static forRoot(params: LoggerParams) {
+    const provider = { provide: 'LoggingServiceParams', useValue: params };
 
     return {
       module: LoggingModule,
-      providers: [loggingProvider],
-      exports: [loggingProvider],
-    };
+      providers: [provider, LoggingService],
+      export: [LoggingService],
+    }
   }
 }

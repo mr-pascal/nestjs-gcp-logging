@@ -1,6 +1,6 @@
-import {Test, TestingModule} from '@nestjs/testing';
-import {LoggingService} from './logging.service';
-import {Severity} from './severity';
+import { Test, TestingModule } from '@nestjs/testing';
+import { LoggingService } from './logging.service';
+import { Severity } from './severity';
 
 const logMessage = 'my message';
 const logSpy = jest.spyOn(console, 'log');
@@ -69,8 +69,8 @@ describe(`LoggingService with GCP_ERROR_REPORTING=true`, () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [LoggingService,
         {
-          provide: 'LoggingServiceParams', // this can be a symbol or a string
-          useValue: {GCP_ERROR_REPORTING: true},
+          provide: 'LoggingServiceParams',
+          useValue: { gcpErrorReporting: true },
         },
       ],
     }).compile();
@@ -86,7 +86,7 @@ describe(`LoggingService with GCP_ERROR_REPORTING=true`, () => {
     const severity = Severity.ERROR;
     it(`Should log with ${severity} severity and stack trace in message`, () => {
       service.error(logMessage);
-      // No need for checking the WHOLE stackstrace
+      // No need for checking the WHOLE stacktrace
       const expectedLog = expect.stringContaining(`{"severity":"${severity}","message":"Error: ${logMessage}\\n    at LoggingService.error`);
 
       expect(logSpy).toHaveBeenLastCalledWith(expectedLog);
