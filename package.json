@@ -34,7 +34,8 @@
   },
   "author": "Pascal Zwikirsch",
   "contributors": [
-    "Uladzimir Aleshka"
+    "Uladzimir Aleshka",
+    "Aliaksei Mahdzich"
   ],
   "homepage": "https://github.com/mr-pascal/nestjs-gcp-logging",
   "bugs": {
