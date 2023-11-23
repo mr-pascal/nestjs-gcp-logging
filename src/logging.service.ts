@@ -21,7 +21,7 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
     super();
   }
 
-  protected composeEntry(severity: Severity, message: any) {
+  protected composeEntry(severity: Severity, message: any): object {
     return { severity, message };
   }
 
