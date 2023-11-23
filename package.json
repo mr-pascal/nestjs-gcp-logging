@@ -1,6 +1,6 @@
 {
   "name": "@pzwik/nestjs-gcp-logger",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -34,7 +34,8 @@
   },
   "author": "Pascal Zwikirsch",
   "contributors": [
-    "Uladzimir Aleshka"
+    "Uladzimir Aleshka",
+    "Aliaksei Mahdzich"
   ],
   "homepage": "https://github.com/mr-pascal/nestjs-gcp-logging",
   "bugs": {
