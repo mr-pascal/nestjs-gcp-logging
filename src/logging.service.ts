@@ -1,6 +1,7 @@
 import { ConsoleLogger, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { LoggerParams } from './loggerParams';
 import { Severity } from './severity';
+import { LogEntry } from './logEntry';
 
 @Injectable()
 /**
@@ -21,11 +22,11 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
     super();
   }
 
-  protected composeEntry(severity: Severity, message: any): object {
+  protected composeEntry(severity: Severity, message: any): LogEntry {
     return { severity, message };
   }
 
-  protected print(entry: object) {
+  protected print(entry: LogEntry) {
     console.log(JSON.stringify(entry));
   }
 
