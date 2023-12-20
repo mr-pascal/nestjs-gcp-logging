@@ -1,6 +1,7 @@
 import { ConsoleLogger, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { LoggerParams } from './loggerParams';
 import { Severity } from './severity';
+import { LogEntry } from './logEntry';
 
 @Injectable()
 /**
@@ -21,12 +22,20 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
     super();
   }
 
+  protected composeEntry(severity: Severity, message: any): LogEntry {
+    return { severity, message };
+  }
+
+  protected print(entry: LogEntry) {
+    console.log(JSON.stringify(entry));
+  }
+
   /**
    * Write an "INFO" level log
    * @param {any} message
    */
   log(message: any) {
-    console.log(JSON.stringify({severity: Severity.INFO, message: message}));
+    this.print(this.composeEntry(Severity.INFO, message));
   }
 
   /**
@@ -41,7 +50,7 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
       message = new Error(composedMessage).stack;
     }
 
-    console.log(JSON.stringify({ severity: Severity.ERROR, message }));
+    this.print(this.composeEntry(Severity.ERROR, message));
   }
 
   /**
@@ -49,7 +58,7 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {any} message
    */
   warn(message: any) {
-    console.log(JSON.stringify({severity: Severity.WARNING, message: message}));
+    this.print(this.composeEntry(Severity.WARNING, message));
   }
 
   /**
@@ -57,7 +66,7 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {any} message
    */
   debug(message: any) {
-    console.log(JSON.stringify({severity: Severity.DEBUG, message: message}));
+    this.print(this.composeEntry(Severity.DEBUG, message));
   }
 
 
@@ -66,6 +75,6 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
    * @param {any} message
    */
   verbose(message: any) {
-    console.log(JSON.stringify({severity: Severity.INFO, message: message}));
+    this.print(this.composeEntry(Severity.INFO, message));
   }
 }
